@@ -8,17 +8,11 @@ Created on Wed Apr 23 14:14:14 2025
 
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import zipfile
-import os
 import geopandas as gpd
 
-
+# stops warnings if adding columns to a df where rows are deleted
 pd.options.mode.copy_on_write=True
 
-# infile = "nyc.pkl"
-
-# raw = pd.read_pickle(infile)
 
 id_blu =    "C00401224"
 id_bern =   "C00696948"
@@ -27,7 +21,7 @@ id_biden =  "C00703975"
 id_kamala = "C00694455"
 id_warren = "C00693234"
 
-raw = pd.read_pickle("USA.pkl")
+raw = pd.read_pickle("USA.zip")
 
 altog = raw.fillna("")
 
@@ -35,7 +29,6 @@ altog = raw.fillna("")
 
 
 # check the number of missing dates
-# raw_ActAll = raw_ActAll[raw_ActAll["TRANSACTION_DT"]=="."]
 
 year = altog["TRANSACTION_DT"].str[-4:]
 is_okay = year.isin(["2019", "2020"])
@@ -83,16 +76,15 @@ is_kh = (altog["CMTE_ID"]==id_kamala) | (altog["OTHER_ID"]==id_kamala)
 print(f"Kamala contribs: {is_kh.sum():,d}")
 
 
+#%%
+
 
 altogdems = altog[is_bs | is_jb | is_kh | is_ew | is_pb]
-
-# Created a new column that included H.C. & B.S. with their unique CMTE_ID or OTHER_ID numbers 
-# act1["cand"] = act1.apply(lambda x:"H.C." if (x["CMTE_ID"]=="C00575795") | (x["OTHER_ID"]=="C00575795") else "B.S.", axis=1)
 
 altogdems["cand"] = "unknown"
 
 # loc = location (tells pandas what to change)
-# putting names in 'cand'
+# putting names of candidates in 'cand'
 altogdems.loc[is_bs, "cand"] = 'bernie'
 
 altogdems.loc[is_pb, "cand"] = 'pete'
@@ -138,7 +130,7 @@ byzip["amt"]=grp_zips["amt"].sum()
 
 byzip.to_pickle("byzip.zip")
 
-#%% Prep for GIS visuals
+#%% Prep for GIS/maps visuals
 
 # "pivoting" the right most column in the index for a 2-level
 # (the columns are a list of tuples to Python -- byzip.columns)
@@ -151,12 +143,11 @@ new_cols = byzip.columns.map('_'.join)
 
 byzip.columns = new_cols
 
-
-#%% Attaching 
-
 byzip = byzip.reset_index()
 
 geo = gpd.read_file("clipt_zips.gpkg")
+
+#%% Attaching and mapping via individual contributors and their location
 
 
 geo = geo.merge(byzip, left_on='ZCTA5CE10', right_on='zip5',
@@ -179,14 +170,10 @@ geo["ratio_PB"]= geo["indi_bernie"]/(geo["indi_bernie"]+ geo["indi_pete"])
 geo["ratio_BK"]= geo["indi_bernie"]/(geo["indi_bernie"]+ geo["indi_kamala"])
 
 
-
 geo["ratio_all"]= geo["indi_bernie"]/(geo["indi_bernie"]+geo["indi_biden"] 
                                       + geo["indi_kamala"] + geo["indi_warren"] + geo["indi_pete"])
 
 
 geo.to_file("USA_primaries.gpkg", layer="2020")
-
-
-
 
 

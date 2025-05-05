@@ -8,17 +8,12 @@ Created on Wed Apr 23 14:14:14 2025
 
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import zipfile
-import os
 import geopandas as gpd
 
 
 pd.options.mode.copy_on_write=True
 
-# infile = "nyc.pkl"
 
-# raw = pd.read_pickle(infile)
 
 id_blu = "C00401224"
 id_bern = "C00577130"
@@ -26,19 +21,15 @@ id_hill = "C00575795"
 
 
 raw = pd.read_pickle("USA.pkl")
+# raw = pd.read_pickle(infile)
 
 altog = raw.fillna("")
 
-
-
 # check the number of missing dates
-# raw_ActAll = raw_ActAll[raw_ActAll["TRANSACTION_DT"]=="."]
-
 year = altog["TRANSACTION_DT"].str[-4:]
 is_okay = year.isin(["2015", "2016"])
 
 altog = altog[is_okay]
-
 
 # changing the transaction date column to convert dates to datetime format
 altog["TRANSACTION_DT"] = pd.to_datetime(altog["TRANSACTION_DT"], format="%m%d%Y")
@@ -54,13 +45,11 @@ print("Positive Contribs:", not_refunds.sum())
 
 altog = altog[not_refunds]
 
-
 # removing in-kind donations from the data
 # Remove rows where MEMO_TEXT contains "IN-KIND"
 # altog = altog[~inkind]
 # checking to see how many in-kind donations
 inkind = altog[altog["MEMO_TEXT"].str.contains("IN-KIND", na=False)]
-
 altog = altog[~altog["MEMO_TEXT"].str.contains("IN-KIND", na=False)]
 
 
@@ -91,7 +80,7 @@ altog["zip5"]= altog["ZIP_CODE"].str[:5]
 # turning a string into a number
 altog["TRANSACTION_AMT"] = altog["TRANSACTION_AMT"].astype(int)
 
-# grouping these three columns 
+# grouping these three columns into new df "grp_indi"
 grp_indi = altog.groupby(['NAME', 'zip5', 'cand'])
 
 # just makes a new df to start putting columns in
@@ -102,6 +91,7 @@ indi["count"] = grp_indi.size()
 
 indi["amt"] = grp_indi["TRANSACTION_AMT"].sum()
 
+#%%
 
 grp_zips = indi.groupby(["zip5", 'cand'])
 
@@ -166,27 +156,6 @@ trim = geo.clip(dis, keep_geom_type=True)
 trim.to_file("ByZip_Trim.gpkg", layer="zips")
 
 borders.to_file("ByZip_Trim.gpkg", layer="states")
-#%% 
-
-
-fig,ax=plt.subplots()
-
-# This is incomplete
-trim.plot("ratio", ax=ax, legend=True)
-
-
-
-# ADD ANOTHER COLUMN TO CHANGE THE SCALE FROM 0 TO 100% SINCE SOME ZIPS HAVE ZERO HILLARY CONTRIBUTORS
-
-
-
-
-
-
-
-
-
-
 
 
 

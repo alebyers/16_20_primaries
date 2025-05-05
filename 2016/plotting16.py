@@ -35,3 +35,5 @@ states.boundary.plot(lw=.1, ax=ax, color="xkcd:periwinkle")
 ax.axis("off")
 
 # save fig
+fig.tight_layout()
+fig.savefig("USA_Bern_Hill.png")

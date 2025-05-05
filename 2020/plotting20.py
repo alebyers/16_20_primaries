@@ -57,19 +57,3 @@ for v in ['indi', 'count', 'amt']:
     fig1.savefig(f"fig_{v}.png")
 
 
-#%%
-#unstacking the data by creating separate columns btwn pri & gen election $$
-by_date_wide = by_date_pgi.unstack("PGI")
-
-# The making of a figure steps:
-fig1, ax1 = plt.subplots(dpi=300)
-# Title
-fig1.suptitle("Individual Contributions")
-
-by_date_wide.plot(ax=ax1)
-
-ax1.set_ylabel("Million Dollars")
-ax1.set_xlabel("Date")
-
-fig1.tight_layout() 
-fig1.savefig("by_month.png")
