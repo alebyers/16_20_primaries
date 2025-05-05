@@ -32,3 +32,5 @@
 2016/pas216.zip
 2016/NYC_W_Out_Names.csv
 2016/nyc-zip-codes.csv
+*.gpkg-shm
+*.gpkg-wal
