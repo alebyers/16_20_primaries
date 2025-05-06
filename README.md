@@ -21,6 +21,8 @@ All raw data used in this project are publicly available:
 
 ## Repository Structure
 
-## How to Reproduce
+Since analysis was done for two elections with different candidates, there is a 2016 folder and 2020 folder each with their own data, Python scripts and outputs. See the individual year-specific README files for detailed instructions.
 
-Each year’s analysis includes a step-by-step breakdown of required files, Python scripts, and outputs. See the individual year-specific README files for detailed instructions.
+## Caveats
+
+FEC classify primary / general. Imperfect process as some contributions are marked as "g2016" with a date in 2015. Possible discrepancy around separating general // Mention inconsistencies looked at contributions in all of 2015 up through June 8, 2016. I did not use the PGI classification of FEC

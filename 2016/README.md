@@ -25,8 +25,8 @@ This analysis examines individual-level campaign contributions during the 2016 D
 ### Step 2: *Download Census Geographic Shapefiles*
 
 * Files used:
-  * `cb_2019_us_state_500k.zip`  → Census State Shapefile
-  * `cb_2019_us_zcta510_500k.zip`  → Census Zip Shapefile
+  * `cb_2019_us_state_500k.zip` → Census State Shapefile
+  * `cb_2019_us_zcta510_500k.zip` → Census Zip Shapefile
 * Python Script: [altogether16.py](altogether16.py)
 * What it does:
   * Merges contribution data with state and zip code shapefiles
@@ -46,17 +46,17 @@ This analysis examines individual-level campaign contributions during the 2016 D
 
 ### Step 4: *Final Visual Output*
 
-* Use `ByZip_Trim.gpkg` to layer contributions over geographic regions using QGIS
-* Final visualization of individual contributors to Bernie Sanders (in green) and Hillary Clinton (in yellow) in relation to the contributors' zipcode in the respective boroughs of New York City:
-  * Figure 1: Bernie Sanders vs. Hillary Clinton
+* Use `nyc-zips.gpkg` + `byzip.csv` to visualize contributors and contributions by zip code using QGIS
+* Final visualizations by zip code in the respective boroughs of New York City:
+  * Figure 1: Bernie Sanders' (green) & Hillary Clinton's (yellow) relative individual contributors. Size of pie chart equates to number of Hillary Clinton's individual contributors
   ![Bernie & Hillary in NYC](NYC/bernhillindiv1.png)
-  * Figure 2: Hillary Clinton financial contributions
-  ![Hillary Dollars by zip code](NYC/HillMoney.png)
-  * Figure 3: Hillary (yellow) to Bernie (green) financial contributions overlayed on Bernie Sanders financial contributions by zip code
+  * Figure 2: Hillary (yellow) to Bernie (green) financial contributions overlayed on Bernie Sanders financial contributions by zip code. Size of pie chart equates to number of Bernie Sanders' total dollar contributions
   ![Bernie Dollars by zip code](NYC/bernMoneyIndiv.png)
+  * Figure 3: Hillary Clinton financial contributions
+  ![Hillary Dollars by zip code](NYC/HillMoney.png)
 
 ## Notes
 
-* *Python libraries used:* `pandas`, `geopandas`, and `matplotlib`.
-* Date filters ensure analysis only includes contributions made before the June 8, 2016 primary date  → when Bernie suspended his campaign.
+* *Python libraries used:* `pandas`, `geopandas`, and `matplotlib`
+* Date filters ensure analysis only includes contributions made before the June 8, 2016 primary date → when Bernie suspended his campaign.
 * Other figures were made in QGIS using the same geopackages.

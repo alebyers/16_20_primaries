@@ -69,8 +69,6 @@ This analysis explores campaign contributions during the 2020 Democratic primary
     1. Total dollar amount contributed per candidate (in millions USD)
     ![total amount contributed](Images/fig_amt.png)
 
----
-
 ## *Notes*
 
 * *Python libraries used:* `pandas`, `geopandas`, and `matplotlib`.
