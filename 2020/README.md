@@ -7,19 +7,19 @@ This analysis explores campaign contributions during the 2020 Democratic primary
 ## Key Questions
 
 * How did contributions differ between the major 2020 Democratic candidates?
-* What trends can be seen in geographic contribution patterns at the ZIP code level?
+* What trends can be seen in geographic contribution patterns at the zip code level?
 * What does the contribution data reveal about grassroots support and donor behavior?
-* How is ActBlue reflected in FEC’s individual contributions dataset in 2020?
+* How is ActBlue reflected in FEC’s individual contributions dataset?
 
 ## *Step-by-Step Process*
 
 ### Step 1: *Download and Filter FEC Contribution Data*
 
 * Files Used:
-  * `cn.txt` (Candidate master file) with `cn_header_file.csv`
-  * `indiv20/itcont.txt` (Individual contributions file) with `indiv_header_file.csv`
+  * `cn.txt`  → Candidate Master with `cn_header_file.csv`
+  * `indiv20/itcont.txt` → Individual contributions with `indiv_header_file.csv`
 
-* Python Script: `scripts/1st_pkg20.py`
+* Python Script: [1st_pkg20.py](1st_pkg20.py)
 
 * What the Script Does:
   * Loads candidate metadata and filters for five key Democratic candidates
@@ -27,74 +27,53 @@ This analysis explores campaign contributions during the 2020 Democratic primary
   * Outputs full and sample datasets in pickle format
 
 * Script Outputs:
-  * `USA.zip`
+  * `USA.zip` → use in Step 2
   * `USA-sample.pkl`
-
----
 
 ### Step 2: *Clean, Filter, and Tag Contributions*
 
-* Python Script: `scripts/altogether20.py`
+* Python Script: [altogether20.py](altogether20.py)
 
 * What the Script Does:
   * Filters contribution records for valid dates (2019–April 7, 2020)
   * Removes refunds and in-kind donations
-  * Identifies and tags contributions by candidate
-  * Aggregates contribution metrics at the individual and ZIP code levels
-  * Merges ZIP-level data with geospatial files to prepare for mapping
+  * Identifies and sorts contributions by candidate
+  * Aggregates contribution metrics at the individual and zip code levels
+  * Merges zipcode-level data with geospatial files to prepare for mapping
 
 * Script Output:
   * `byzip.zip`
-  * `USA_primaries.gpkg` (Geopackage for map visualizations)
-
----
+  * `USA_primaries.gpkg` → geopackage for map visualizations
 
 ### Step 3: *Generate National Visualizations*
 
-* Python Script: `scripts/plotting20.py`
+* Python Script: [plotting20.py](plotting20.py)
 
-* What the Script Does:
-  * Figures show ratio of individuals contributing to Bernie divided by individuals numbers closer to 1, indicated in green, means most or all f with other leading presidential candidates Loads geospatial contribution data and plots ZIP-code-level maps for:
-    * Figure 1: Bernie
-    * ![Bernie vs. Biden](Images/2020_Dem_PrimariesBB.png)
-    * ![Bernie vs. Kamala](`ratio_BK`)
-    * Bernie vs. Warren (`ratio_BW`)
-    * Bernie vs. Pete (`ratio_PB`)
-    * Bernie vs. Entire Field (`ratio_all`)
-  * Creates bar plots comparing:
-    * Total number of individual contributors
-    * Total number of contributions
-    * Total amount contributed per candidate
-
-* Script Outputs:
-  * ``
-  * ``
-  * `2020_Dem_PrimariesBW.png`
-  * `2020_Dem_PrimariesPB.png`
-  * `2020_Dem_Primariesall.png`
-  * `fig_indi.png`
-  * `fig_count.png`
-  * `fig_amt.png`
-
----
-
-## *Reproducing the Results*
-
-To reproduce this analysis:
-
-1. Download the required FEC data (`cn.txt`, `itcont.txt`) and census shapefiles.
-2. Ensure `cn_header_file.csv` and `indiv_header_file.csv` match the FEC data format.
-3. Run scripts in the following order:
-   * `1st_pkg20.py` → saves raw and sample data
-   * `altogether20.py` → filters, tags, and processes contributions into geospatial form
-   * `plotting20.py` → generates maps and summary visualizations
-
-*Python libraries used:* `pandas`, `geopandas`, and `matplotlib`.
+* Visual Outputs:
+  * The figures below show the ratio of individuals contributing to Bernie divided by individuals contributing to respective candidate. When the numbers are closer to 1, indicated in green, that means most or all individuals contributed to Bernie's campaign in that zipcode.
+    * Figure 1: Bernie Sanders vs. Joe Biden
+     ![Bernie vs. Biden](Images/2020_Dem_PrimariesBB.png)
+    * Figure 2: Bernie Sanders vs. Kamala Harris
+     ![Bernie vs. Kamala](Images/2020_Dem_PrimariesBK.png)
+    * Figure 3: Bernie Sanders vs. Elizabeth Warren
+     ![Bernie vs. Warren](Images/2020_Dem_PrimariesBW.png)
+    * Figure 4: Bernie Sanders vs. Pete Buttigieg
+     ![Bernie vs. Pete](Images/2020_Dem_PrimariesPB.png)
+    * Figure 5: Bernie Sanders vs. other four candidates
+     ![Bernie vs. All](Images/2020_Dem_Primariesall.png)
+  * The bar charts below shows three different ratios:
+    1. Total number of individual contributors to each presidential campaign
+    ![individual contributions](Images/fig_indi.png)
+    1. Total number of contributions (suggesting people had monthly installments for candidate(s) or founds ways to donate multiple times over)
+    ![number of contributions](Images/fig_count.png)
+    1. Total dollar amount contributed per candidate (in millions USD)
+    ![total amount contributed](Images/fig_amt.png)
 
 ---
 
 ## *Notes*
 
+* *Python libraries used:* `pandas`, `geopandas`, and `matplotlib`.
 * ActBlue contributions are captured under committee IDs and may include "OTHER_ID" references depending on routing.
 * Mapping is conducted at the national level using 5-digit ZIP code regions, not local precincts or boroughs.
 * Date filters ensure analysis only includes contributions made before the April 8, 2020 primary date–when Bernie suspended his campaign.
