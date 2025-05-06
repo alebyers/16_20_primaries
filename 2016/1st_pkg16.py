@@ -12,7 +12,6 @@ import pandas as pd
 # 1st download candidate master list+header: https://www.fec.gov/data/browse-data/?tab=bulk-data
 # read header
 head=pd.read_csv("indiv_header_file.csv",dtype=str)
-# chunk.columns = header.columns
 
 # open zip of candidate master to then open the .txt file
 cand = 'cn.txt'
@@ -50,7 +49,7 @@ nys.to_pickle("nys.pkl")
 ny_cities = nys["CITY"].value_counts()
 
 keepers = ['NEW YORK', 'NY', 'NYC', 'NEW YORK CITY', 'FLUSHING', 'JAMAICA', 
-           'BROOKLYN', 'BRONX', 'STATEN ISLAND']
+           'BROOKLYN', 'BRONX', 'QUEENS', 'STATEN ISLAND']
 
 nyc = nys [nys["CITY"].isin(keepers)]
 

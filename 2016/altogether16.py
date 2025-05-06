@@ -119,7 +119,7 @@ byzip.columns = new_cols
 
 byzip.to_csv("byzip.csv")
 
-#%% Attaching 
+#%% Attaching zip code shapefile with individual contributions ratio btwn Bernie & Hillary
 
 byzip = byzip.reset_index()
 
@@ -134,8 +134,6 @@ not_mapable = geo[~is_mapable]
 
 geo = geo[is_mapable]
 
-#%% 
-
 geo["ratio"]= geo["indi_bern"]/(geo["indi_hill"]+geo["indi_bern"])
 
 geo = geo.drop(columns="_merge")
@@ -143,7 +141,7 @@ geo = geo.drop(columns="_merge")
 geo.to_file("USA_Primaries.gpkg", layer="2016")
 
 
-#%%
+#%% Using Census state shapefile to have state borders on USA_Primaries layer 
 
 borders = gpd.read_file("cb_2019_us_state_500k.zip")
 

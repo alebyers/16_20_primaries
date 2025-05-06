@@ -22,12 +22,10 @@ states=states.to_crs(epsg=6350)
 
 #%% 
 
-
-fig,ax=plt.subplots(dpi=400)
-
+fig,ax=plt.subplots(dpi=500)
 
 
-# This is incomplete
+# making the map with the ratio of Bernie to Hillary individual contributors data
 trim.plot("ratio", ax=ax, legend=True, cmap="RdYlGn")
 
 states.boundary.plot(lw=.1, ax=ax, color="xkcd:periwinkle")
