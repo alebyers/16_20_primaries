@@ -25,4 +25,8 @@ Since analysis was done for two elections with different candidates, there is a 
 
 ## Caveats
 
-FEC classify primary / general. Imperfect process as some contributions are marked as "g2016" with a date in 2015. Possible discrepancy around separating general // Mention inconsistencies looked at contributions in all of 2015 up through June 8, 2016. I did not use the PGI classification of FEC
+FEC Classification Inconsistencies: The Federal Election Commission's (FEC) designation of contributions as either "primary" or "general" can be unreliable. Some contributions marked as “g2016” (for the general election) are dated as early as 2012, well before the official start of the 2016 election cycle. This raises concerns about data cleanliness and highlights the difficulty in clearly distinguishing between primary and general election contributions.
+
+PGI Field Not Used: Due to these inconsistencies, this analysis did not rely on the FEC’s TRANSACTION_PGI (Primary/General Indicator) field to filter contributions. Instead, contributions made during the active campaign period were considered. For the 2016 analysis, this included all of 2015 to June 8, 2016 → the Bernie Sanders suspended his campaign.
+
+Geographic Anomalies in NYC: Contribution behavior in New York City deviates from broader national trends. Specifically, the city shows stronger individual-level support for Hillary Clinton relative to Bernie Sanders, which stands in contrast to other progressive-leaning urban areas. Several factors may explain this: Hillary Clinton had recently served as U.S. Senator for New York, while Bernie Sanders, though born in Brooklyn, had lived in Vermont for decades and may have lacked recent political ties to the area. Lastly, Bernie’s base of support included many new and independent voters who may have been less likely to contribute financially or register in time for New York’s closed primaries.
